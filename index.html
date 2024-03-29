@@ -1,0 +1,248 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/styles.css">
+	<title>NVHL Ticket Driver</title>
+</head>
+
+<body>
+
+<!-- Reference PA Ticket Driver for comments and updated code -->
+<h1>NVHL Ticket Driver</h1>
+	
+<main>
+	<form id="nvhlTicketDriver">
+		<div class="form-column">
+			<div>
+				<label for="type" >Type of Ticket:</label>
+				<select id="type" name="type" onchange="showQuestions()">
+					<option value="placeholder">Select Ticket Type</option>
+					<option value="rop">ROP Reinstatement</option>
+					<option value="incomeRop">Income ROP Reinstatement</option>
+					<option value="pdm">PDM Reinstatement</option>
+					<option value="carrierReinstatement">Reinstatement Request: (Carrier)</option>
+					<option value="etdc">Effective Termination Date Change</option>
+					<option value="enf">Enrollment Not Found</option>
+					<option value="pw">Password Reset</option>
+					<option value="duplicate">Duplicate Household / Enrollment Cancelation</option>
+					<option value="aor">AOR Not Found / Missing Commission</option>
+					<option value="1095A">1095A Remail Request</option>
+					<option value="refund">Refund / Billing: HPN</option>
+					<option value="appLoop">Edit Application Loop</option>
+					<option value="500Error">Edit 500 Error / SAAP Error</option>
+					<option value="nullError">Null Null Error / SAAP Error</option>
+				</select>
+			</div>
+
+			<div class="question-set" id="ropQuestions">
+                <label for="generalropreason">Reason documentation was not provided:</label>
+                <input type="text" id="generalropreason" name="generalropreason">
+
+                <label for="ropdocument">Type of Document:</label>
+                <input type="text" id="ropdocument" name="ropdocument">
+            </div>
+
+            <div class="question-set" id="incomeRopQuestions">
+                <label for="incomeropreason">Reason income documentation was not provided:</label>
+                <input type="text" id="incomeropreason" name="incomeropreason">
+
+                <label for="appincome">Income amount listed on application:</label>
+                <input type="text" id="appincome" name="appincome">
+            </div>
+
+            <div class="question-set" id="pdmQuestions">
+                <label for="pdmdocument">Document needed to resolve Periodic Data Matching Issue:</label>
+                <input type="text" id="pdmdocument" name="pdmdocument">
+
+                <label for="pdmsource">Source of the Periodic Data Matching Issue:</label>
+                <input type="text" id="pdmsource" name="pdmsource">
+            </div>
+
+            <div class="question-set" id="carrierReinstatementQuestions">
+                <label for="reinstateplan">Name of consumer's plan:</label>
+                <input type="text" id="reinstateplan" name="reinstateplan">
+				
+				<label for="carriername">Name of carrier:</label>
+				<input type="text" id="carriername" name="carriername">
+
+                <label for="nonpayment">Reason for not paying:</label>
+                <input type="text" id="nonpayment" name="nonpayment">
+				
+				<label for="reinstateefdates">Effective Dates:</label>
+				<input type="text" id="reinstateefdates" name="reinstateefdates">
+				
+				<label for="reinstatenet">Net Premium:</label>
+				<input type="text" id="reinstatenet" name="reinstatenet">
+            </div>
+			
+			<div class="question-set" id="etdcQuestions">
+				<label for="backdate">Reason for the backdate request:</label>
+                 <input type="text" id="backdate" name="backdate">
+				
+                 <label for="etdcplanname">Plan name:</label>
+                 <input type="text" id="etdcplanname" name="etdcplanname">
+				
+				<label for="etdcnet">Net Premium:</label>
+                <input type="text" id="etdcnet" name="etdcnet">
+				
+				<label for="etdccsr">CSRs:</label>
+                <input type="text" id="etdccsr" name="etdccsr">
+			</div>
+			
+			<div class="question-set" id="enfQuestions">
+				<label for="enfplan">Plan Name:</label>
+                <input type="text" id="enfplan" name="enfplan">
+
+                 <label for="enfdates">Effective Dates:</label>
+                 <input type="text" id="enfdates" name="enfdates">
+				
+				<label for="enfnet">Net Premium:</label>
+				<input type="text" id="enfnet" name="enfnet">
+			</div>
+			
+			<div class="question-set" id="pwQuestions">
+				<div class="pw-questions">
+					<label for="pwtitle">Agent or Consumer:</label>
+					<label for="pwagent">Agent
+						<input type="radio" id="pwagent" name="pwagentorconsumer" value="Agent"
+							   onClick="toggleAgent(true)"></label>
+					<label for="pwconsumer">Consumer
+						<input type="radio" id="pwconsumer" name="pwagentorconsumer" value="Consumer"
+							   onClick="toggleAgent(false)"></label>
+				</div>
+				
+				<div id="pwAgentSection" class="pw-hidden">
+					<label for="pwagentname">Agent's first &amp; last name:</label>
+					<input type="text" id="pwagentname" name="pwagentname">
+				</div>
+				
+				<div id="emailAccessSection">
+					<label for="emailaccess">Access to email on file:
+						<input type="checkbox" id="emailaccess" name="emailaccess" onClick="toggleEmail()" >
+					</label>
+				</div>
+				
+			</div>
+			
+			<div class="question-set" id="duplicateQuestions">
+				<label for="oldhhid">HHID for the old policy:</label>
+				<input type="text" id="oldhhid" name="oldhhid">
+
+				<label for="oldpolicy">Policy ID for the old policy:</label>
+				<input type="text" id="oldpolicy" name="oldpolicy">
+				
+				<label for="oldcarrier">Carrier for the old policy:</label>
+				<input type="text" id="oldcarrier" name="oldcarrier">
+				
+				<label for="cancel">Cancellation date the consumer has requested:</label>
+				<input type="text" id="cancel" name="cancel">
+				
+				<label for="correcthhid">HHID for the correct policy:</label>
+				<input type="text" id="correcthhid" name="correcthhid">
+				
+				<label for="correctpolicy">Policy ID for the correct policy:</label>
+				<input type="text" id="correctpolicy" name="correctpolicy">
+				
+				<label for="correctcarrier">Carrier for the correct policy:</label>
+				<input type="text" id="correctcarrier" name="correctcarrier">
+				
+				<label for="dupsummary">Additional Information:</label>
+				<input type="text" id="dupsummary" name="dupsummary">
+				
+				<label for="ticaccount">Is the ticket being created on the account with the new policy:</label>
+				<input type="text" id="ticaccount" name="ticaccount">
+			</div>
+
+			<div class="question-set" id="aorQuestions">
+				<label for="agentname">Agent's first and last name:</label>
+				<input type="text" id="agentname" name="agentname">
+				
+				<label for="agentlisted">Agent "is" or "isn't" listed on enrollment:</label>
+				<input type="text" id="agentlisted" name="agentlisted">
+			</div>
+
+			<div class="question-set" id="1095AQuestions">
+				<label for="currentaddress">Current mailing address:</label>
+				<input type="text" id="currentaddress" name="currentaddress">
+			</div>
+
+			<div class="question-set" id="refundQuestions">
+				<label for="refundammount">Refund amount being requested:</label>
+				<input type="text" id="refundammount" name="refundammount">
+
+				<label for="refundreason">Reason refund is being requested:</label>
+				<input type="text" id="refundreason" name="refundreason">
+				
+				<label for="refundterm">Policy termination date:</label>
+				<input type="text" id="refundterm" name="refundterm">
+				
+				<label for="refundmonths">Month/s the consumer should not have been billed for:</label>
+				<input type="text" id="refundmonths" name="refundmonths">
+				
+				<label for="refundname">Plan name:</label>
+				<input type="text" id="refundname" name="refundname">
+				
+				<label for="refundnet">Net Premium:</label>
+				<input type="text" id="refundnet" name="refundnet">
+				
+				<label for="refundcsr">CSRs:</label>
+				<input type="text" id="refundcsr" name="refundcsr">
+			</div>
+
+			<div class="question-set" id="appLoopQuestions">
+				<label for="apploopagent">Agent's first and last name:</label>
+				<input type="text" id="apploopagent" name="apploopagent">
+			</div>
+
+			<div class="question-set" id="500ErrorQuestions">
+				<label for="fiveerroragent">Agent's first and last name:</label>
+				<input type="text" id="fiveerroragent" name="fiveerroragent">
+			</div>
+
+			<div class="question-set" id="nullErrorQuestions">
+				<label for="nullagent">Agent's first and last name:</label>
+				<input type="text" id="nullagent" name="nullagent">
+			</div>
+			
+			<div class="name" id="nameSection">
+				<label for="firstLast">Primary's First &amp; Last Name:</label>
+				<input type="text" id="firstLast" name="firstLast">
+			</div>
+			
+			<div class="hhid" id="hhidSection">
+				<label for="hhidField">HHID:</label>
+				<input type="text" id="hhidField" name="hhidField">
+			</div>
+			
+			<div class="callerclass" id="callerSection">
+				<label for="caller">Caller Name &amp; Relationship:</label>
+				<input type="text" id="caller" name="caller">
+			</div>
+			
+			<div class="callnum" id="callbackSection">
+				<label for="callbacknum">Callback Number:</label>
+				<input type="text" id="callbacknum" name="callbackNum">
+			</div>
+			
+			<div class="form-buttons">
+				<button id="generate-output-button" type="button" onclick="generateOutput()">Generate Ticket</button>
+				<button id="clear-button" type="button" onclick="clearForm()">Reset Form</button>
+			</div>
+		</div>
+	</form>
+	
+	<div id="output-panel">
+		<h3>Generated Ticket</h3>
+		<div id="output"></div>
+		<button id="copy-output-button" onclick="copyOutput()">Copy Ticket</button>
+		<h6>After copying, paste the Ticket into "Ticket Description" with CTRL + V or Right Click</h6>
+	</div>
+	
+</main>
+
+<script src="js/script.js"></script>
+	
+</body>
+</html>
